@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demostración SQL Injection</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9;}
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        input { width: 70%; padding: 10px; margin-bottom: 15px; }
+        button { padding: 10px 15px; cursor: pointer; border: none; color: white; border-radius: 4px;}
+        .btn-vuln { background-color: #e74c3c; }
+        .btn-secure { background-color: #2ecc71; }
+        pre { background: #333; color: #0f0; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Buscador de Usuarios</h2>
+    <p>Prueba buscando <strong>admin</strong> o intenta la inyección: <strong>' OR '1'='1</strong></p>
+    
+    <input type="text" id="usernameInput" placeholder="Ingresa el nombre de usuario...">
+    <br>
+    <button class="btn-vuln" onclick="searchUser('vulnerable_search')">Búsqueda Vulnerable</button>
+    <button class="btn-secure" onclick="searchUser('secure_search')">Búsqueda Segura</button>
+
+    <h3>Resultado:</h3>
+    <pre id="resultDisplay">Esperando consulta...</pre>
+</div>
+
+<script>
+    async function searchUser(endpoint) {
+        const username = document.getElementById('usernameInput').value;
+        const resultDisplay = document.getElementById('resultDisplay');
+        
+        try {
+            // Se hace la petición a FastAPI (asegúrate de que FastAPI esté corriendo en el puerto 8000)
+            const response = await fetch(`http://localhost:8000/api/${endpoint}?username=${encodeURIComponent(username)}`);
+            const data = await response.json();
+            
+            // Formatear el JSON para mostrarlo bonito
+            resultDisplay.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+            resultDisplay.textContent = "Error de conexión. ¿Está corriendo FastAPI en el puerto 8000?";
+        }
+    }
+</script>
+
+</body>
+</html>
