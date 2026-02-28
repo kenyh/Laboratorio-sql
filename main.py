@@ -34,7 +34,7 @@ def init_db():
 
 init_db()
 
-# ❌ CÓDIGO VULNERABLE
+#CÓDIGO VULNERABLE
 @app.get("/api/vulnerable_search")
 def vulnerable_search(username: str):
     conn = sqlite3.connect("database.db")
@@ -55,7 +55,7 @@ def vulnerable_search(username: str):
         
     return {"data": result, "query_ejecutada": query}
 
-# ✅ CÓDIGO SEGURO (SOLUCIÓN)
+#CÓDIGO SEGURO (SOLUCIÓN)
 @app.get("/api/secure_search")
 def secure_search(username: str):
     conn = sqlite3.connect("database.db")
