@@ -34,7 +34,7 @@
         const resultDisplay = document.getElementById('resultDisplay');
         
         try {
-            // Se hace la petición a FastAPI (asegúrate de que FastAPI esté corriendo en el puerto 8000)
+            // Se hace la petición a FastAPI (asegurar que corre en el puerto 8000)
             const response = await fetch(`http://localhost:8000/api/${endpoint}?username=${encodeURIComponent(username)}`);
             const data = await response.json();
             
